@@ -43,4 +43,24 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
         'matricula' => 'integer',
     ];
+
+     // Relacionamento com os posts
+     public function posts() {
+        return $this->hasMany('App\Post');
+    }
+
+    // Relacionamento com os comentários
+    public function comments() {
+        return $this->hasMany('App\Comment');
+    }
+
+    // Relacionamento com as curtidas
+    public function likes() {
+        return $this->hasMany('App\Like');
+    }
+
+    // Relacionamento com as amizades
+    public function friendships() {
+        return $this->hasMany('App\Friendship', 'user1_id');
+    }
 }
