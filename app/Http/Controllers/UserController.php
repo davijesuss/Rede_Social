@@ -12,15 +12,15 @@ class UserController extends Controller
      */
     public function index(Request $request)
     {
-        $nome = $request->input('nome'); // Obtém o nome do formulário
-    
-        if ($nome) {
-            $usuarios = User::where('name', 'like', "%$nome%")->get(); // Filtra usuários com base no nome
-        } else {
-            $usuarios = User::all(); // Obtém todos os usuários
+        $search = request('search');
+
+        if($search){
+            $usuarios = User::where('name', 'ilike' , "%$search%" )->get();
+        }else{
+            $usuarios = collect();
         }
     
-        return view('user.timeline', compact('usuarios'));
+        return view('user.timeline', ['search' => $search, 'usuarios' => $usuarios]);
     }
 
     /**

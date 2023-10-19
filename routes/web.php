@@ -24,7 +24,7 @@ Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
-Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtro_usuarios');
+Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtrar_usuarios');
 
 
 
