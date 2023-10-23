@@ -19,9 +19,13 @@
             <tr>
                 <td>{{ $usuario->name }}</td>
                 <td class="d-flex">
-                    <button type="submit" class="btn btn-danger">
-                        <i class="fa-solid fa-trash"></i></a>
-                    </button>
+                    <form action="{{ route('friendships.store') }}" method="post">
+                        @csrf
+                        <input type="hidden" name="user_id" value="{{ $usuario->id }}">
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fa-solid fa-trash">Adicionar</i>
+                        </button>
+                    </form>
                 </td>
             </tr>
             @endforeach
@@ -30,5 +34,16 @@
         <p>Nenhum usuário encontrado para a busca '{{ $search }}'.</p>
         @endif
     </table>
+    @if(session('success'))
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
+    @endif
+
+    @if(session('error'))
+    <div class="alert alert-danger">
+        {{ session('error') }}
+    </div>
+    @endif
 </div>
 @endsection

@@ -3,25 +3,15 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 
-
-class UserController extends Controller
+class PostsController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function index(Request $request)
+    public function index()
     {
-        $search = request('search');
-
-        if($search){
-            $usuarios = User::where('name', 'ilike' , "%$search%" )->get();
-        }else{
-            $usuarios = collect();
-        }
-    
-        return view('user.timeline', ['search' => $search, 'usuarios' => $usuarios]);
+        //
     }
 
     /**
@@ -71,5 +61,4 @@ class UserController extends Controller
     {
         //
     }
-    
 }

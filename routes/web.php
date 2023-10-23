@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\LoginController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -26,5 +27,5 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtrar_usuarios');
 
-
+Route::post('/friendship', [FriendshipsController::class, 'store'])->name('friendships.store');
 

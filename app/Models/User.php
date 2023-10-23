@@ -46,7 +46,7 @@ class User extends Authenticatable
 
      // Relacionamento com os posts
      public function posts() {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('App\Models\Post', 'useres_id', 'id'); 
     }
 
     // Relacionamento com os comentários
@@ -61,6 +61,6 @@ class User extends Authenticatable
 
     // Relacionamento com as amizades
     public function friendships() {
-        return $this->hasMany('App\Friendship', 'user1_id');
+        return $this->hasMany('App\Friendship', 'user1_id', 'id');
     }
 }
