@@ -2,9 +2,9 @@
 
 @section('content')
 <div class="container">
-    <form action="{{ route('filtrar_usuarios') }}" method="get">
+    <form action="{{ route('filtrar_usuarios') }}" method="get" class="d-flex" >
         <input type="text" id="search" name="search" class="form-control" placeholder="procurar...">
-        <button type="submit">Buscar</button>
+        <button type="submit" class="btn btn-primary">Buscar</button>
     </form>
     <table class="table">
         @if(count($usuarios) > 0)

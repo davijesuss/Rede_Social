@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\User;
 
 class HomeController extends Controller
 {
@@ -23,6 +24,14 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $search = request('search');
+
+        if($search){
+            $usuarios = User::where('name', 'ilike' , "%$search%" )->get();
+        }else{
+            $usuarios = collect();
+        }
+    
+        return view('user.timeline', ['search' => $search, 'usuarios' => $usuarios]);
     }
 }
