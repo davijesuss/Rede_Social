@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 
 class PostsController extends Controller
 {
@@ -19,7 +20,9 @@ class PostsController extends Controller
      */
     public function create()
     {
-        //
+        $posts = Post::orderBy('created_at', 'desc')->get();
+
+
     }
 
     /**
@@ -27,7 +30,23 @@ class PostsController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'conteudo_post' => 'required|string|max:255',
+            'imagem_post' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+    
+        $post = new Post;
+        $post->users_id = auth()->user()->id;
+        $post->conteudo_post = $request->input('conteudo_post');
+    
+        if ($request->hasFile('imagem_post')) {
+            $imagePath = $request->file('imagem_post')->store('uploads', 'public');
+            $post->imagem_post = $imagePath;
+        }
+    
+        $post->save();
+    
+        return redirect()->route('filtrar_usuarios')->with('success', 'Postagem criada com sucesso!');
     }
 
     /**
@@ -35,7 +54,8 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $posts = Post::find($id);
+        return view('user.timeline', compact('posts'));
     }
 
     /**

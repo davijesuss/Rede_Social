@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
 
@@ -29,4 +30,13 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtrar_usuarios');
 
 Route::post('/friendship', [FriendshipsController::class, 'store'])->name('friendships.store');
+
+Route::post('/postagens', [PostsController::class, 'store'])->name('postagens.store');
+Route::get('/postagens/criar', [PostsController::class, 'create'])->name('postagens.create');
+Route::get('/postagem/{posts}', 'PostagemController@show')->name('postagem.show');
+
+
+
+
+
 
