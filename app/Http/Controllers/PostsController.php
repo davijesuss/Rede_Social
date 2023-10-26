@@ -12,7 +12,7 @@ class PostsController extends Controller
      */
     public function index()
     {
-        //
+      
     }
 
     /**
@@ -20,8 +20,7 @@ class PostsController extends Controller
      */
     public function create()
     {
-        $posts = Post::orderBy('created_at', 'desc')->get();
-
+      
 
     }
 
@@ -54,8 +53,7 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-        $posts = Post::find($id);
-        return view('user.timeline', compact('posts'));
+       
     }
 
     /**

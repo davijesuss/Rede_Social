@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Post;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -24,14 +25,36 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $search = request('search');
+        $posts = Post::with('user')->get(); // Carrega os usuários associados aos posts
+        return view('postagens.postagens', ['posts' => $posts]);
+    }
 
-        if($search){
-            $usuarios = User::where('name', 'ilike' , "%$search%" )->get();
-        }else{
-            $usuarios = collect();
+    public function store(Request $request)
+    {
+        $request->validate([
+            'conteudo_post' => 'required|string|max:255',
+            'imagem_post' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        $post = new Post;
+        $post->users_id = auth()->user()->id;
+        $post->conteudo_post = $request->input('conteudo_post');
+
+        if ($request->hasFile('imagem_post') && $request->file('imagem_post')->isValid()) {
+
+            $requestImage = $request->file('imagem_post'); // Corrigido aqui
+
+            $extension = $requestImage->extension();
+
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension; // Corrigido aqui
+
+            $requestImage->move(public_path('img/postagem'), $imageName); // Adicionado ponto e vírgula
+
+            $post->imagem_post = $imageName;
         }
-    
-        return view('user.timeline', ['search' => $search, 'usuarios' => $usuarios]);
+
+        $post->save();
+
+        return redirect()->route('home')->with('success', 'Postagem criada com sucesso!');
     }
 }
