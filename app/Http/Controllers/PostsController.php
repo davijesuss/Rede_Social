@@ -77,6 +77,9 @@ class PostsController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+       // dd($id);
+        Post::where('id' , $id)->delete();
+        return redirect()->route('home');
+
     }
 }

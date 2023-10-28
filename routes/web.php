@@ -37,6 +37,9 @@ Route::post('/friendship', [FriendshipsController::class, 'store'])->name('frien
 Route::post('/postagens', [HomeController::class, 'store'])->name('postagens.store');
 Route::get('/postagens/criar', [PostsController::class, 'create'])->name('postagens.create');
 Route::get('/postagem/{posts}', [PostsController::class, 'show'])->name('postagem.show');
+Route::delete('/postagem/{id}', [PostsController::class, 'destroy'])->name('postagem.destroy');
+
+
 
 
 

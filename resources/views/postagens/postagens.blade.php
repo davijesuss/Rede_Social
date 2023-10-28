@@ -23,23 +23,33 @@
 
     <!-- Carregamento dos posts -->
     <div class="container">
-    <h2>Timeline do Usuário</h2>
-    @foreach($posts as $post)
+        <h2>Timeline do Usuário</h2>
+        @foreach($posts as $post)
         <div class="card mb-3">
             <div class="card-body">
                 @if($post->user)
-                    <h5 class="card-title">{{ $post->user->name }}</h5>
+                <h5 class="card-title">{{ $post->user->name }}</h5>
                 @else
-                    <h5 class="card-title">Usuário não encontrado</h5>
+                <h5 class="card-title">Usuário não encontrado</h5>
                 @endif
                 <p class="card-text">{{ $post->conteudo_post }}</p>
                 @if($post->imagem_post)
-                    <img src="/img/postagem/{{$post->imagem_post}}" class="img-fluid" alt="Imagem da Postagem">
+                <img src="/img/postagem/{{$post->imagem_post}}" class="img-fluid" alt="Imagem da Postagem">
                 @endif
+                <div class="d-flex">
+                <form action="{{ route('postagem.destroy',  ['id' => $post->id])}}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="btn btn-danger me-2">excluir</button>
+                    </form>
+                    <form action="">
+                        <button type="submit" class="btn btn-primary">Editar</button>
+                    </form>
+                </div>
             </div>
         </div>
-    @endforeach
-</div>
+        @endforeach
+    </div>
     <!-- Carregamento dos posts -->
 </div>
 @endsection
