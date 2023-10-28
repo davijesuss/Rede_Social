@@ -62,6 +62,15 @@ class PostsController extends Controller
     public function edit(string $id)
     {
         //
+        //dd($id);
+       $post = Post::where('id', $id)->first();
+        if(!empty($post)){
+            return view('postagens.edit', ['post' => $post]);
+        }else {
+            return redirect()->route('home');
+
+        }
+
     }
 
     /**

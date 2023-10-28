@@ -38,6 +38,8 @@ Route::post('/postagens', [HomeController::class, 'store'])->name('postagens.sto
 Route::get('/postagens/criar', [PostsController::class, 'create'])->name('postagens.create');
 Route::get('/postagem/{posts}', [PostsController::class, 'show'])->name('postagem.show');
 Route::delete('/postagem/{id}', [PostsController::class, 'destroy'])->name('postagem.destroy');
+Route::get('/postagem/{id}/edit' , [PostsController::class, 'edit'])->name('postagem.edit');
+Route::put('/postagem/{id}', [PostsController::class, 'update'])->name('postagens.update');
 
 
 

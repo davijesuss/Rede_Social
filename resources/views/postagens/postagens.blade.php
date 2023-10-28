@@ -42,7 +42,7 @@
                         @method('DELETE')
                         <button type="submit" class="btn btn-danger me-2">excluir</button>
                     </form>
-                    <form action="">
+                    <form action="{{ route('postagem.edit', ['id' => $post->id])}}" method="get">
                         <button type="submit" class="btn btn-primary">Editar</button>
                     </form>
                 </div>
