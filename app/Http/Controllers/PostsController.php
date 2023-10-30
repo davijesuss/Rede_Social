@@ -76,11 +76,36 @@ class PostsController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, $id)
     {
-        //
+        // Validar os dados recebidos do formulário
+        $request->validate([
+            'conteudo_post' => 'required',
+            'imagem_post' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
+        ]);
+    
+        // Recuperar a postagem que você deseja atualizar
+        $post = Post::findOrFail($id);
+    
+        // Aplicar as alterações nos campos
+        $post->conteudo_post = $request->input('conteudo_post');
+    
+        // Verificar se uma nova imagem foi enviada
+        if ($request->hasFile('imagem_post') && $request->file('imagem_post')->isValid()) {
+            $requestImage = $request->file('imagem_post');
+            $extension = $requestImage->extension();
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+            $requestImage->move(public_path('img/postagem'), $imageName);
+            $post->imagem_post = $imageName;
+        }
+    
+        // Salvar a postagem atualizada
+        $post->save();
+    
+        // Redirecionar para a página de detalhes da postagem, por exemplo
+        return redirect()->route('home', $post->id);
     }
-
+    
     /**
      * Remove the specified resource from storage.
      */

@@ -6,8 +6,9 @@
     <div class="container">
         <h2>Criar Nova Postagem</h2>
 
-        <form  method="post" enctype="multipart/form-data">
+        <form action="{{ route('postagens.update', $post->id) }}" method="post" enctype="multipart/form-data">
             @csrf
+            @method('PUT')
             <div class="form-group">
                 <label for="content">Texto:</label>
                 <textarea class="form-control" id="conteudo_post" name="conteudo_post" rows="2">{{ old('conteudo_post', $post->conteudo_post) }}</textarea>
