@@ -63,4 +63,8 @@ class User extends Authenticatable
     public function friendships() {
         return $this->hasMany('App\Friendship', 'user1_id', 'id');
     }
+    
+    public function perfil() {
+        return $this->hasOne('App\Models\Perfil', 'user_id', 'id'); 
+    }
 }

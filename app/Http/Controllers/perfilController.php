@@ -3,26 +3,17 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
 use App\Models\Perfil;
 
-
-class UserController extends Controller
+class perfilController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index(Request $request)
     {
-        $search = request('search');
-
-        if($search){
-            $usuarios = User::where('name', 'ilike' , "%$search%" )->get();
-        }else{
-            $usuarios = collect();
-        }
-    
-        return view('user.timeline', ['search' => $search, 'usuarios' => $usuarios]);
+        $perfil = Perfil::first(); // Ou use algum outro método para selecionar um perfil específico
+         return view('user.perfil',  ['perfil' => $perfil]);
     }
 
     /**
@@ -38,8 +29,22 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $perfil = new Perfil($request->all());
+        $perfil->user_id = auth()->user()->id;
+    
+        if ($request->hasFile('imagem_perfil') && $request->file('imagem_perfil')->isValid()) {
+            $requestImage = $request->file('imagem_perfil');
+            $extension = $requestImage->extension();
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
+            $requestImage->move(public_path('img/perfil'), $imageName);
+            $perfil->imagem_perfil = $imageName;
+            // Save the updated perfil after adding the image
+        }
+
+        $perfil->save();
+        return view('user.perfil', ['perfil' => $perfil]);
     }
+    
 
     /**
      * Display the specified resource.
@@ -72,5 +77,4 @@ class UserController extends Controller
     {
         //
     }
-    
 }

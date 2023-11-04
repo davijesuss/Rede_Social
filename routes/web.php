@@ -3,6 +3,7 @@
 use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\perfilController;
 use App\Http\Controllers\PostsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\UserController;
@@ -30,6 +31,9 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 
 Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtrar_usuarios');
 
+
+Route::match(['get', 'post'], '/perfil-usuarios', [perfilController::class, 'index'])->name('perfil_usuarios');
+Route::post('/perfil', [perfilController::class, 'store'])->name('perfil.store');
 
 Route::post('/friendship', [FriendshipsController::class, 'store'])->name('friendships.store');
 
