@@ -21,7 +21,7 @@
                 <img src="/img/perfil/perfilnull.png" class="card-img-top perfil-img" alt="imagem do perfil">
                 @endif
                 <div class="card-body">
-                    <h5 class="card-title">Seu Nome</h5>
+                    <h5 class="card-title">{{ $perfil->user->name }}</h5>
                     <p class="card-text">Descrição sobre você.</p>
                     <form action="{{ route('perfil.store') }}" method="post" enctype="multipart/form-data">
                         @csrf
