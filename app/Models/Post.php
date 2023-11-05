@@ -11,10 +11,10 @@ class Post extends Model
     protected $table = 'posts';
     protected $fillable = [
         'conteudo_post',
-        'imagem_pos'
+        'imagem_post'
     ];
 
-    public function User(){
-        return $this->belongsTo('App\Models\User');
+    public function user(){
+        return $this->belongsTo(User::class, 'users_id');
     }
 }

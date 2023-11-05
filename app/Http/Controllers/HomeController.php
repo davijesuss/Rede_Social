@@ -26,6 +26,7 @@ class HomeController extends Controller
     public function index()
     {
         $posts = Post::with('user')->orderBy('created_at', 'desc')->get(); // Carrega os usuários associados aos posts
+       // dd($posts);
         return view('postagens.postagens', ['posts' => $posts]);
     }
 
