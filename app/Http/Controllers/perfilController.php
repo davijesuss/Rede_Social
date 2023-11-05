@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Perfil;
+use Illuminate\Support\Facades\Auth;
 
 class perfilController extends Controller
 {
@@ -12,8 +13,8 @@ class perfilController extends Controller
      */
     public function index(Request $request)
     {
-        $perfil = Perfil::first(); // Ou use algum outro método para selecionar um perfil específico
-         return view('user.perfil',  ['perfil' => $perfil]);
+        $perfil = Auth::user()->perfil;
+        return view('user.perfil', ['perfil' => $perfil]);
     }
 
     /**
