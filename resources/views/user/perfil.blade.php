@@ -40,6 +40,14 @@
                     <p class="card-text">Nome: Seu Nome</p>
                     <p class="card-text">Email: seuemail@example.com</p>
                     <p class="card-text">Telefone: (123) 456-7890</p>
+                    <div class="d-flex">
+                        <form action="{{ route('perfil.informacao') }}" method="get">
+                            <button type="submit" class="btn btn-primary me-2">Adicionar</button>
+                        </form>
+                        <form  method="get">
+                            <button type="submit" class="btn btn-danger">Editar</button>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>

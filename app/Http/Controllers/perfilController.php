@@ -32,7 +32,7 @@ class perfilController extends Controller
     {
         $perfil = new Perfil($request->all());
         $perfil->user_id = auth()->user()->id;
-    
+
         if ($request->hasFile('imagem_perfil') && $request->file('imagem_perfil')->isValid()) {
             $requestImage = $request->file('imagem_perfil');
             $extension = $requestImage->extension();
@@ -41,11 +41,13 @@ class perfilController extends Controller
             $perfil->imagem_perfil = $imageName;
             // Save the updated perfil after adding the image
         }
+        $biografia = $request->input('biografia');
+        $perfil->biografia = $biografia;
 
         $perfil->save();
         return view('user.perfil', ['perfil' => $perfil]);
     }
-    
+
 
     /**
      * Display the specified resource.
@@ -77,5 +79,9 @@ class perfilController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+    public function perfilInfo()
+    {
+       return view('user.perfilInfo');
     }
 }
