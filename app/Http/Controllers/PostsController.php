@@ -45,7 +45,6 @@ class PostsController extends Controller
     
         $post->save();
     
-        return redirect()->route('filtrar_usuarios')->with('success', 'Postagem criada com sucesso!');
     }
 
     /**
