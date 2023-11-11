@@ -12,7 +12,11 @@ class Perfil extends Model
     protected $fillable = [
         'biografia',
         'semestre',
-        'imagem_perfil'
+        'imagem_perfil',
+        'email',
+        'telefone',
+        'instagram',
+        'curso'
     ];
     
     public function user() {

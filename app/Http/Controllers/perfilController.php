@@ -22,7 +22,14 @@ class perfilController extends Controller
      */
     public function create()
     {
-        //
+        $perfil = Auth::user()->perfil;
+
+        // Se o usuário já tiver um perfil, redirecione para a edição em vez de criar um novo
+        if ($perfil) {
+            return redirect()->route('perfil.edit', ['id' => $perfil->id]);
+        }
+    
+        return view('user.perfil');
     }
 
     /**
@@ -30,9 +37,10 @@ class perfilController extends Controller
      */
     public function store(Request $request)
     {
+        
         $perfil = new Perfil($request->all());
         $perfil->user_id = auth()->user()->id;
-
+       
         if ($request->hasFile('imagem_perfil') && $request->file('imagem_perfil')->isValid()) {
             $requestImage = $request->file('imagem_perfil');
             $extension = $requestImage->extension();
@@ -41,8 +49,6 @@ class perfilController extends Controller
             $perfil->imagem_perfil = $imageName;
             // Save the updated perfil after adding the image
         }
-        $biografia = $request->input('biografia');
-        $perfil->biografia = $biografia;
 
         $perfil->save();
         return view('user.perfil', ['perfil' => $perfil]);
@@ -82,6 +88,7 @@ class perfilController extends Controller
     }
     public function perfilInfo()
     {
-       return view('user.perfilInfo');
+        return view('user.perfilInfo');
     }
+
 }
