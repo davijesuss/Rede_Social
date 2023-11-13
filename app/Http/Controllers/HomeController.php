@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use App\Models\Friendships;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -25,7 +26,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->orderBy('created_at', 'desc')->get();
+        // Obtém os IDs dos amigos
+        $friendIds = Friendships::where('user1_id', auth()->user()->id)
+            ->orWhere('user2_id', auth()->user()->id)
+            ->pluck('user1_id', 'user2_id')
+            ->toArray();
+    
+        // Adiciona o próprio ID do usuário à lista de IDs dos amigos
+        $friendIds[] = auth()->user()->id;
+    
+        dd($friendIds);
+        // Obtém as postagens dos amigos
+        $posts = Post::with('user')
+            ->whereIn('users_id', $friendIds)
+            ->orderBy('created_at', 'desc')
+            ->get();
+
+            dd($posts);
         return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user()]);
     }
     
