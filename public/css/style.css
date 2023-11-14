@@ -220,3 +220,11 @@ ul.posts li.post div.actionBtnPost button.filePost img {
     max-height: 200px;
     /* Adicione outros estilos conforme necessário */
 }
+.perfil-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}

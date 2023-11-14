@@ -5,7 +5,7 @@
     <!--formulario de postagem-->
     <div class="newPost">
         <div class="infoUser">
-            <div class="imgUse"> </div>
+            <div class="imgUse"></div>
             <strong>{{ $user->name }}</strong>
         </div>
         <form action="{{ route('postagens.store') }}" method="post" class="formPost">
@@ -45,8 +45,12 @@
             </p>
             <div class="actionBtnPost">
                 <button type="button" class="filePost like"><img src="{{ asset('img/heart.svg')}}" alt="Curtir">Curtir</button>
-                <button type="button" class="filePost comment"><img src="{{ asset('img/comment.svg')}}" alt="Curtir">Comentar</button>
-                <button type="button" class="filePost share"><img src="{{ asset('img/comment.svg')}}" alt="Curtir">Compartilhar</button>
+                <button type="button" class="filePost comment"><img src="{{ asset('img/heart.svg')}}" alt="Curtir">Comentar</button>
+                <form action="{{ route('postagem.destroy',  ['id' => $post->id])}}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="filePost share" style="background-color: #4CAF50; color: white;"><i class="fa fa-trash-o"> Excluir</i></button>
+                </form>
             </div>
         </li>
     </ul>

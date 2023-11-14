@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
 use App\Models\Friendships;
+use App\Models\Perfil;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -31,21 +33,21 @@ class HomeController extends Controller
             ->orWhere('user2_id', auth()->user()->id)
             ->pluck('user1_id', 'user2_id')
             ->toArray();
-    
+
         // Adiciona o próprio ID do usuário à lista de IDs dos amigos
         $friendIds[] = auth()->user()->id;
-    
-        dd($friendIds);
+        // dd( $friendIds);
         // Obtém as postagens dos amigos
         $posts = Post::with('user')
             ->whereIn('users_id', $friendIds)
+            ->orWhere('users_id', auth()->user()->id) // Inclua as próprias postagens do usuário logado
             ->orderBy('created_at', 'desc')
             ->get();
+       // dd($posts);
+       $perfil = Perfil::where('user_id', auth()->user()->id)->first();
 
-            dd($posts);
-        return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user()]);
+        return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
     }
-    
     public function store(Request $request)
     {
         $request->validate([

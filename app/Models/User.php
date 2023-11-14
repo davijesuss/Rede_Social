@@ -60,8 +60,9 @@ class User extends Authenticatable
     }
 
     // Relacionamento com as amizades
-    public function friendships() {
-        return $this->hasMany('App\Friendship', 'user1_id', 'id');
+    public function friendships()
+    {
+        return $this->hasMany(Friendship::class, 'user1_id')->orWhere('user2_id');
     }
     
     public function perfil() {
