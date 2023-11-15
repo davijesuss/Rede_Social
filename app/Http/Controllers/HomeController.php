@@ -61,21 +61,20 @@ class HomeController extends Controller
 
         if ($request->hasFile('imagem_post') && $request->file('imagem_post')->isValid()) {
 
-            $requestImage = $request->file('imagem_post'); // Corrigido aqui
-
+            $requestImage = $request->file('imagem_post');
             $extension = $requestImage->extension();
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension; // Corrigido aqui
-
-            $requestImage->move(public_path('img/postagem'), $imageName); // Adicionado ponto e vírgula
-
+            $requestImage->move(public_path('img/postagem'), $imageName);
             $post->imagem_post = $imageName;
         }
 
         $post->save();
 
-        return redirect()->route('home')->with('success', 'Postagem criada com sucesso!');
+        // Retornar uma resposta JSON
+        return response()->json(['success' => true, 'message' => 'Postagem criada com sucesso!']);
     }
+
     public function likePost(Post $post)
     {
         auth()->user()->likes()->toggle($post);

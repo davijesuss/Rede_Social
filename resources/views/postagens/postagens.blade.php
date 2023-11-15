@@ -8,7 +8,7 @@
             <div class="imgUse"></div>
             <strong>{{ $user->name }}</strong>
         </div>
-        <form action="{{ route('postagens.store') }}" method="post" class="formPost">
+        <form class="formPost" name="formPost">
             @csrf
             <textarea id="conteudo_post" name="conteudo_post" placeholder="fala estudante"></textarea>
 
@@ -63,3 +63,25 @@
 
 </main>
 @endsection
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.form/4.3.0/jquery.form.min.js"></script>
+
+
+<script>
+   $(function() {
+    $('form[name="formPost"]').submit(function(event) {
+        event.preventDefault();
+        $.ajax({
+            url: "{{ route('postagens.store') }}",
+            type: "post",
+            data: $(this).serialize(),
+            dataType: 'json',
+            success: function(response) {
+                window.location.href = "{{ route('home')}}"
+                console.log(response);
+            }
+        });
+    });
+});
+
+</script>
