@@ -28,6 +28,9 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::post('/posts/{post}/like', [HomeController::class, 'likePost'])->name('post.like');
+Route::get('/user/likes', [HomeController::class, 'showLikes'])->name('user.likes');
+
 
 Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'index'])->name('filtrar_usuarios');
 

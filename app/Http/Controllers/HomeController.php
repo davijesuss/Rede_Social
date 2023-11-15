@@ -43,8 +43,8 @@ class HomeController extends Controller
             ->orWhere('users_id', auth()->user()->id) // Inclua as próprias postagens do usuário logado
             ->orderBy('created_at', 'desc')
             ->get();
-       // dd($posts);
-       $perfil = Perfil::where('user_id', auth()->user()->id)->first();
+        // dd($posts);
+        $perfil = Perfil::where('user_id', auth()->user()->id)->first();
 
         return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
     }
@@ -75,5 +75,18 @@ class HomeController extends Controller
         $post->save();
 
         return redirect()->route('home')->with('success', 'Postagem criada com sucesso!');
+    }
+    public function likePost(Post $post)
+    {
+        auth()->user()->likes()->toggle($post);
+
+        return redirect()->back()->with('success', 'Ação de curtir realizada com sucesso!');
+    }
+    public function showLikes()
+    {
+        $user = auth()->user();
+        $likes = $user->likes;
+
+        return view('likes.index', compact('likes'));
     }
 }

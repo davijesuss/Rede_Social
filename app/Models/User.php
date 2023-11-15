@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -54,10 +55,8 @@ class User extends Authenticatable
         return $this->hasMany('App\Comment');
     }
 
-    // Relacionamento com as curtidas
-    public function likes() {
-        return $this->hasMany('App\Like');
-    }
+ 
+   
 
     // Relacionamento com as amizades
     public function friendships()
@@ -67,5 +66,9 @@ class User extends Authenticatable
     
     public function perfil() {
         return $this->hasOne('App\Models\Perfil', 'user_id', 'id'); 
+    }
+    public function likes(): BelongsToMany
+    {
+        return $this->belongsToMany(Post::class, 'post_likes', 'user_id', 'post_id')->withTimestamps();
     }
 }
