@@ -30,20 +30,17 @@ class HomeController extends Controller
     {
         // Obtém os IDs dos amigos
         $friendIds = Friendships::where('user1_id', auth()->user()->id)
-            ->orWhere('user2_id', auth()->user()->id)
             ->pluck('user1_id', 'user2_id')
             ->toArray();
-
-        // Adiciona o próprio ID do usuário à lista de IDs dos amigos
+       
         $friendIds[] = auth()->user()->id;
-        // dd( $friendIds);
-        // Obtém as postagens dos amigos
+        $allFriendIds = array_keys($friendIds);
+        
         $posts = Post::with('user')
-            ->whereIn('users_id', $friendIds)
+            ->whereIn('users_id', $allFriendIds)
             ->orWhere('users_id', auth()->user()->id) // Inclua as próprias postagens do usuário logado
             ->orderBy('created_at', 'desc')
             ->get();
-        // dd($posts);
         $perfil = Perfil::where('user_id', auth()->user()->id)->first();
 
         return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
