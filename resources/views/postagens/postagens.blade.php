@@ -50,16 +50,35 @@
                         <img src="{{ asset('img/heart.svg')}}" alt="Curtir">
                         Curtir ({{ $post->likes()->count() }})
                     </button>
-                </form> <button type="button" class="filePost comment"><img src="{{ asset('img/heart.svg')}}" alt="Curtir">Comentar</button>
+                </form>
+                <button type="button" class="filePost comment"><img src="{{ asset('img/heart.svg')}}" alt="Curtir">Comentar</button>
+              <form action="{{ route('postagem.edit',  ['id' => $post->id])}}" action="">
+                    <button type="submit" class="filePost navbar-brand" style="background-color: #00ff7f; color: white;"><i>Editar</i></button>
+                </form>
                 <form action="{{ route('postagem.destroy',  ['id' => $post->id])}}" method="POST">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="filePost share" style="background-color: #4CAF50; color: white;"><i class="fa fa-trash-o"> Excluir</i></button>
+                    <button type="submit" class="filePost navbar-brand" style="background-color: #4CAF50; color: white;"><i> Excluir</i></button>
                 </form>
+
             </div>
         </li>
     </ul>
-    @endforeach
+    <!--modal-->
+    <div class="modal" tabindex="-1" id="meuModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Informações Pessoais</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+
+                </div>
+            </div>
+        </div>
+        <!--modal-->
+        @endforeach
 
 </main>
 @endsection
@@ -68,20 +87,26 @@
 
 
 <script>
-   $(function() {
-    $('form[name="formPost"]').submit(function(event) {
-        event.preventDefault();
-        $.ajax({
-            url: "{{ route('postagens.store') }}",
-            type: "post",
-            data: $(this).serialize(),
-            dataType: 'json',
-            success: function(response) {
-                window.location.href = "{{ route('home')}}"
-                console.log(response);
-            }
+
+     function mostrar_modal() {
+        let el = document.getElementById('meuModal');
+        let meuModal = new bootstrap.Modal(el);
+        meuModal.show();
+    }
+
+    $(function() {
+        $('form[name="formPost"]').submit(function(event) {
+            event.preventDefault();
+            $.ajax({
+                url: "{{ route('postagens.store') }}",
+                type: "post",
+                data: $(this).serialize(),
+                dataType: 'json',
+                success: function(response) {
+                    window.location.href = "{{ route('home')}}"
+                    console.log(response);
+                }
+            });
         });
     });
-});
-
 </script>

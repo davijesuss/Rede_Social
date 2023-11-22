@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <!-- Criação de post -->
-    <div class="container">
+    <!--<div class="container">
         <h2>Criar Nova Postagem</h2>
 
         <form action="{{ route('postagens.update', $post->id) }}" method="post" enctype="multipart/form-data">
@@ -20,6 +20,23 @@
             <button type="submit" class="btn btn-primary">Salvar alteração</button>
         </form>
     </div>
-    <!--  -->
+      -->
+    <div class="newPost">
+        <form class="formPost" action="{{ route('postagens.update', $post->id) }}" method="post" enctype="multipart/form-data">
+             @csrf
+            @method('PUT')
+            <textarea id="conteudo_post" name="conteudo_post" placeholder="fala estudante">{{ old('conteudo_post', $post->conteudo_post) }}</textarea>
+
+
+            <div class="iconsAndButton">
+                <div class="icons">
+                    <button class="btnFileForm"><img src="{{ asset('img/img.svg')}}" alt="Adicionar uma imagem"></button>
+                    <button class="btnFileForm"><img src="{{ asset('img/gif.svg')}}" alt="Adicionar um gif"></button>
+                    <button class="btnFileForm"><img src="{{ asset('img/video.svg')}}" alt="Adicionar um video"></button>
+                </div>
+                <button type="submit" class="btnSubmitForm">Salvar alteração</button>
+            </div>
+        </form>
+    </div>
 </div>
 @endsection
