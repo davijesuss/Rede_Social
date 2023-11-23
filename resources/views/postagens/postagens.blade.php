@@ -52,7 +52,7 @@
                     </button>
                 </form>
                 <button type="button" class="filePost comment"><img src="{{ asset('img/heart.svg')}}" alt="Curtir">Comentar</button>
-              <form action="{{ route('postagem.edit',  ['id' => $post->id])}}" action="">
+                <form action="{{ route('postagem.edit',  ['id' => $post->id])}}" action="">
                     <button type="submit" class="filePost navbar-brand" style="background-color: #00ff7f; color: white;"><i>Editar</i></button>
                 </form>
                 <form action="{{ route('postagem.destroy',  ['id' => $post->id])}}" method="POST">
@@ -64,21 +64,7 @@
             </div>
         </li>
     </ul>
-    <!--modal-->
-    <div class="modal" tabindex="-1" id="meuModal">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Informações Pessoais</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-
-                </div>
-            </div>
-        </div>
-        <!--modal-->
-        @endforeach
+    @endforeach
 
 </main>
 @endsection
@@ -87,8 +73,7 @@
 
 
 <script>
-
-     function mostrar_modal() {
+    function mostrar_modal() {
         let el = document.getElementById('meuModal');
         let meuModal = new bootstrap.Modal(el);
         meuModal.show();
