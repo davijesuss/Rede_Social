@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Post;
+use Illuminate\Support\Facades\DB;
+use App\Models\Friendships;
+use App\Models\Perfil;
 use App\Models\User;
 
 class HomeController extends Controller
@@ -25,10 +28,23 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $posts = Post::with('user')->get(); // Carrega os usuários associados aos posts
-        return view('postagens.postagens', ['posts' => $posts]);
-    }
+        // Obtém os IDs dos amigos
+        $friendIds = Friendships::where('user1_id', auth()->user()->id)
+            ->pluck('user1_id', 'user2_id')
+            ->toArray();
+       
+        $friendIds[] = auth()->user()->id;
+        $allFriendIds = array_keys($friendIds);
+        
+        $posts = Post::with('user')
+            ->whereIn('users_id', $allFriendIds)
+            ->orWhere('users_id', auth()->user()->id) // Inclua as próprias postagens do usuário logado
+            ->orderBy('created_at', 'desc')
+            ->get();
+        $perfil = Perfil::where('user_id', auth()->user()->id)->first();
 
+        return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
+    }
     public function store(Request $request)
     {
         $request->validate([
@@ -42,19 +58,31 @@ class HomeController extends Controller
 
         if ($request->hasFile('imagem_post') && $request->file('imagem_post')->isValid()) {
 
-            $requestImage = $request->file('imagem_post'); // Corrigido aqui
-
+            $requestImage = $request->file('imagem_post');
             $extension = $requestImage->extension();
+            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension;
 
-            $imageName = md5($requestImage->getClientOriginalName() . strtotime("now")) . "." . $extension; // Corrigido aqui
-
-            $requestImage->move(public_path('img/postagem'), $imageName); // Adicionado ponto e vírgula
-
+            $requestImage->move(public_path('img/postagem'), $imageName);
             $post->imagem_post = $imageName;
         }
 
         $post->save();
 
-        return redirect()->route('home')->with('success', 'Postagem criada com sucesso!');
+        // Retornar uma resposta JSON
+        return response()->json(['success' => true, 'message' => 'Postagem criada com sucesso!']);
+    }
+
+    public function likePost(Post $post)
+    {
+        auth()->user()->likes()->toggle($post);
+
+        return redirect()->back()->with('success', 'Ação de curtir realizada com sucesso!');
+    }
+    public function showLikes()
+    {
+        $user = auth()->user();
+        $likes = $user->likes;
+
+        return view('likes.index', compact('likes'));
     }
 }

@@ -10,11 +10,18 @@ class Post extends Model
     use HasFactory;
     protected $table = 'posts';
     protected $fillable = [
+        'users_id',
         'conteudo_post',
-        'imagem_pos'
+        'imagem_post'
     ];
 
-    public function User(){
-        return $this->belongsTo('App\Models\User');
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'users_id');
+    }
+    
+    public function likes()
+    {
+        return $this->belongsToMany(User::class, 'post_likes', 'post_id', 'user_id');
     }
 }

@@ -1,0 +1,230 @@
+* {
+    margin: 0;
+    padding: 0;
+
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #fbfbfb;
+    font-family: 'Roboto', sans-serif;
+
+    -webkit-font-smoothing: antialiased !important;
+}
+
+li {
+    list-style: none;
+}
+
+.main {
+    max-width: 900px;
+    margin: 0 auto;
+}
+
+div.newPost {
+    width: 100%;
+    height: 240px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    margin: 50px 0;
+    padding: 25px;
+
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.2);
+}
+
+div.newPost div.infoUser {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+div.newPost div.infoUser div.imgUse {
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    background: #333;
+}
+
+div.newPost div.infoUser strong {
+    font-size: 16px;
+    margin-left: 10px;
+
+    color: #23a0ff;
+}
+
+div.newPost form.formPost {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+div.newPost form.formPost textarea {
+    height: 90px;
+    background: #fbfbfb;
+    margin: 15px 0;
+    padding: 25px;
+    border-radius: 10px;
+    resize: none;
+    outline: none;
+    border: 0;
+
+    font-weight: bold;
+    font-family: 'Roboto', sans-serif;
+    color: #727272;
+
+}
+
+div.newPost form.formPost div.iconsAndButton {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.newPost form.formPost div.iconsAndButton div.icons {
+    width: 100px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+div.newPost form.formPost div.iconsAndButton div.icons button {
+    outline: none;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+    border: 0;
+    background: none;
+
+    cursor: pointer;
+}
+
+div.newPost form.formPost div.iconsAndButton button.btnSubmitForm {
+    background: #23a0ff;
+    padding: 10px 50px;
+    color: #fff;
+    font-weight: bold;
+    outline: none;
+    cursor: pointer;
+
+    border: 0;
+    border-radius: 10px;
+    transition: background 0.2s;
+
+}
+
+div.newPost form.formPost div.iconsAndButton button.btnSubmitForm:hover {
+    background: #23a0ff;
+}
+
+ul.posts li.post {
+    margin-bottom: 50px;
+    width: 100%;
+    background: #fff;
+    border-radius: 10px;
+    padding: 25px;
+    box-shadow: 1px 0 3px rgba(0, 0, 0, 0.5);
+}
+
+ul.posts li.post div.infoUserPost {
+    display: flex;
+    align-items: center;
+
+}
+
+ul.posts li.post div.infoUserPost div.nameAndHour {
+    margin-left: 10px;
+}
+
+ul.posts li.post div.infoUserPost div.imgUserpost {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: #23a0ff;
+}
+
+ul.posts li.post div.infoUserPost div.nameAndHour>strong {
+    color: #23a0ff;
+}
+
+ul.posts li.post div.infoUserPost div.nameAndHour>p {
+    color: #d1d1d1;
+    font-size: 12px;
+}
+
+ul.posts li.post>p {
+    width: 100%;
+    margin: 20px 0;
+    font-weight: bold;
+    color: #727272;
+}
+
+ul.posts li.post div.actionBtnPost {
+    display: flex;
+    align-items: center;
+
+}
+
+ul.posts li.post div.actionBtnPost button.filePost {
+    padding: 5px 20px;
+    border: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    outline: none;
+    color: #fff;
+    font-size: 16px;
+
+    font-weight: bold;
+    margin-right: 10px;
+    border-radius: 10px;
+    cursor: pointer;
+
+    transition: background 0.2s;
+
+}
+
+ul.posts li.post div.actionBtnPost button.filePost img {
+    margin-right: 5px;
+}
+
+.like {
+    background: #ff6b6b;
+}
+
+.like:hover {
+    background: rgb(248, 75, 75);
+}
+
+.comment {
+    background: #ffc320;
+}
+
+.comment:hover {
+    background: rgb(245, 180, 0);
+}
+
+.share {
+    background: #23a0ff;
+}
+
+.share:hover {
+    background: #23a0ff;
+}
+.post-image {
+    max-width: 200px;
+    max-height: 200px;
+    /* Adicione outros estilos conforme necessário */
+}
+.perfil-img {
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    margin: 0 auto;
+    display: block;
+}
