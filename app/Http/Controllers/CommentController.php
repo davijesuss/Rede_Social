@@ -47,6 +47,7 @@ class CommentController extends Controller
     public function show(string $id)
     {
         //
+        
         $post = Post::findOrFail($id);
         $comments = $post->comments; 
 

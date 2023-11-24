@@ -36,14 +36,14 @@ class HomeController extends Controller
         $friendIds[] = auth()->user()->id;
         $allFriendIds = array_keys($friendIds);
         
-        $posts = Post::with('user')
+        $posts = Post::with(['user','comments'])
             ->whereIn('users_id', $allFriendIds)
             ->orWhere('users_id', auth()->user()->id) // Inclua as próprias postagens do usuário logado
             ->orderBy('created_at', 'desc')
             ->get();
         $perfil = Perfil::where('user_id', auth()->user()->id)->first();
-
-        return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
+        
+        return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil,'comments'=>[]]);
     }
     public function store(Request $request)
     {

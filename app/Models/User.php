@@ -63,10 +63,7 @@ class User extends Authenticatable
     {
         return $this->hasMany(Friendship::class, 'user1_id')->orWhere('user2_id');
     }
-    
-    public function perfil() {
-        return $this->hasOne('App\Models\Perfil', 'user_id', 'id'); 
-    }
+
     public function likes(): BelongsToMany
     {
         return $this->belongsToMany(Post::class, 'post_likes', 'user_id', 'post_id')->withTimestamps();
