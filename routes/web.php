@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\CommentController;
 use App\Http\Controllers\FriendshipsController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
@@ -49,7 +50,7 @@ Route::delete('/postagem/{id}', [PostsController::class, 'destroy'])->name('post
 Route::get('/postagem/{id}/edit' , [PostsController::class, 'edit'])->name('postagem.edit');
 Route::put('/postagem/{id}', [PostsController::class, 'update'])->name('postagens.update');
 
-
+Route::post('/postagem/{post}/comments', [CommentController::class, 'store'])->name('comentario.store');
 
 
 
