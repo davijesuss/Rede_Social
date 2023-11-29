@@ -19,7 +19,7 @@ class Post extends Model
     {
         return $this->belongsTo(User::class, 'users_id');
     }
-    
+
     public function likes()
     {
         return $this->belongsToMany(User::class, 'post_likes', 'post_id', 'user_id');
@@ -27,7 +27,10 @@ class Post extends Model
 
     public function comments()
     {
-        return $this->hasMany(Comment::class, 'post_id','id');
+        return $this->hasMany(Comment::class, 'post_id', 'id');
     }
-
+    public function commentCount()
+    {
+        return $this->comments()->count();
+    }
 }
