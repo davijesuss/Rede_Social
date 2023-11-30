@@ -43,7 +43,6 @@ class HomeController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
         $perfil = Perfil::where('user_id', auth()->user()->id)->first();
-
         return view('postagens.postagens', ['posts' => $posts, 'user' => auth()->user(), 'perfil' => $perfil]);
     }
     public function store(Request $request)

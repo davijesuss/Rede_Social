@@ -38,7 +38,9 @@ Route::match(['get', 'post'], '/filtrar-usuarios', [UserController::class, 'inde
 
 Route::match(['get', 'post'], '/perfil-usuarios', [perfilController::class, 'index'])->name('perfil_usuarios');
 Route::post('/perfil', [perfilController::class, 'store'])->name('perfil.store');
-Route::get('/perfil/info', [perfilController::class, 'perfilInfo'])->name('perfil.informacao');
+Route::get('/perfil/{id}/edit', [perfilController::class, 'edit'])->name('perfil.edit');
+Route::post('/perfil/{id}/update', [perfilController::class, 'update'])->name('perfil.update');
+
 
 Route::post('/friendship', [FriendshipsController::class, 'store'])->name('friendships.store');
 

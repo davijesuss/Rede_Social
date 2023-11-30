@@ -28,7 +28,7 @@ class perfilController extends Controller
         if ($perfil) {
             return redirect()->route('perfil.edit', ['id' => $perfil->id]);
         }
-    
+
         return view('user.perfil');
     }
 
@@ -37,10 +37,10 @@ class perfilController extends Controller
      */
     public function store(Request $request)
     {
-        
+
         $perfil = new Perfil($request->all());
         $perfil->user_id = auth()->user()->id;
-       
+
         if ($request->hasFile('imagem_perfil') && $request->file('imagem_perfil')->isValid()) {
             $requestImage = $request->file('imagem_perfil');
             $extension = $requestImage->extension();
@@ -68,7 +68,8 @@ class perfilController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $perfil = Perfil::find($id); // Supondo que seu modelo seja chamado Perfil
+        return view('perfil.edit', compact('perfil'));
     }
 
     /**
@@ -76,7 +77,18 @@ class perfilController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $perfil = Perfil::find($id);
+
+        // Atualize os campos do perfil com os dados do formulário
+        $perfil->biografia = $request->input('biografia');
+        $perfil->email = $request->input('email');
+        // ... Repita para os outros campos
+
+        // Salve as alterações
+        $perfil->save();
+
+        // Redirecione para a página de exibição do perfil ou qualquer outra página desejada
+        return redirect()->route('perfil_usuarios', ['id' => $perfil->id]);
     }
 
     /**
@@ -90,5 +102,4 @@ class perfilController extends Controller
     {
         return view('user.perfilInfo');
     }
-
 }

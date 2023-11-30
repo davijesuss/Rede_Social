@@ -44,8 +44,11 @@
                     <p class="card-text">Email: Indisponível</p>
                     <p class="card-text">Telefone: Indisponível</p>
                     @endif
-                    <button type="button" class="btn btn-primary" onclick="mostrar_modal()">
+                    <button type="button" class="btn btn-primary" onclick="mostrar_modal()" @if($perfil) disabled @endif>
                         Adicionar
+                    </button>
+                    <button type="button" class="btn btn-primary" onclick="mostrar_modal_edicao()" >
+                        Editar
                     </button>
                 </div>
             </div>
@@ -96,6 +99,52 @@
         </div>
     </div>
     <!--modal-->
+      <!--modal edição-->
+      <div class="modal" tabindex="-1" id="meuModalEdicao">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Edição de Informações</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="{{ route('perfil.update', ['id' => $perfil->id]) }}" method="post" enctype="multipart/form-data">
+                        @csrf
+                        <div class="form-group">
+                            <label for="biografia">Biografia:</label>
+                            <input type="text" class="form-control" id="biografia" name="biografia" placeholder="Conte sobre você..." value="{{ $perfil->biografia }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Email:</label>
+                            <input type="email" class="form-control" id="email" name="email" placeholder="seuemail@example.com" value="{{ $perfil->email }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="telefone">Telefone:</label>
+                            <input type="tel" class="form-control" id="telefone" name="telefone" placeholder="(123) 456-7890" value="{{ $perfil->telefone }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="instagram">Instagram:</label>
+                            <input type="text" class="form-control" id="instagram" name="instagram" placeholder="instagram" value="{{ $perfil->instagram }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="curso">Curso:</label>
+                            <input type="text" class="form-control" id="curso" name="curso" placeholder="curso" value="{{ $perfil->curso }}">
+                        </div>
+                        <div class="form-group">
+                            <label for="imagem_perfil">Imagem do Perfil:</label>
+                            <input type="file" class="form-control-file" name="imagem_perfil" value="{{ $perfil->imagem_perfil }}">
+                        </div>
+
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="submit" class="btn btn-primary">Salvar</button>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    <!--modal-->
 </div>
 @endsection
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -105,7 +154,40 @@
         let meuModal = new bootstrap.Modal(el);
         meuModal.show();
     }
+    function mostrar_modal_edicao() {
+        let el = document.getElementById('meuModalEdicao');
+        let meuModalEdicao = new bootstrap.Modal(el);
+        meuModalEdicao.show();
+    }
 
+    $(function() {
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}'
+            }
+        });
+
+        $('#addLinha').submit(function(event) {
+            event.preventDefault();
+
+            var formData = new FormData(this); // Use FormData para incluir os dados do arquivo
+            $.ajax({
+                url: "{{ route('perfil.store') }}",
+                type: "post",
+                data: formData,
+                dataType: "json",
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log(response);
+                    $('#meuModal').modal('hide');
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+    });
     $(function() {
         $.ajaxSetup({
             headers: {
