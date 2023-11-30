@@ -50,13 +50,15 @@
                         <i>Editar</i>
                     </button>
                 </form>
-                <form action="{{ route('postagem.destroy', ['id' => $post->id]) }}" method="POST">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" class="filePost navbar-brand" style="background-color: #4CAF50; color: white;">
-                        <i> Excluir</i>
-                    </button>
-                </form>
+                @if (auth()->check() && auth()->user()->id === $post->users_id)
+                    <form action="{{ route('postagem.destroy', ['id' => $post->id]) }}" method="POST">
+                        @csrf
+                        @method('DELETE')
+                        <button type="submit" class="filePost navbar-brand" style="background-color: #4CAF50; color: white;">
+                            <i> Excluir</i>
+                        </button>
+                    </form>
+                @endif
             </div>
 
             <!-- Modal de Comentários -->

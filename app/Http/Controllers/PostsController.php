@@ -12,7 +12,6 @@ class PostsController extends Controller
      */
     public function index()
     {
-      
     }
 
     /**
@@ -20,8 +19,6 @@ class PostsController extends Controller
      */
     public function create()
     {
-      
-
     }
 
     /**
@@ -33,18 +30,17 @@ class PostsController extends Controller
             'conteudo_post' => 'required|string|max:255',
             'imagem_post' => 'image|mimes:jpeg,png,jpg,gif,svg|max:2048',
         ]);
-    
+
         $post = new Post;
         $post->users_id = auth()->user()->id;
         $post->conteudo_post = $request->input('conteudo_post');
-    
+
         if ($request->hasFile('imagem_post')) {
             $imagePath = $request->file('imagem_post')->store('uploads', 'public');
             $post->imagem_post = $imagePath;
         }
-    
+
         $post->save();
-    
     }
 
     /**
@@ -52,7 +48,6 @@ class PostsController extends Controller
      */
     public function show(string $id)
     {
-       
     }
 
     /**
@@ -62,14 +57,12 @@ class PostsController extends Controller
     {
         //
         //dd($id);
-       $post = Post::where('id', $id)->first();
-        if(!empty($post)){
+        $post = Post::where('id', $id)->first();
+        if (!empty($post)) {
             return view('postagens.edit', ['post' => $post]);
-        }else {
+        } else {
             return redirect()->route('home');
-
         }
-
     }
 
     /**
@@ -82,13 +75,13 @@ class PostsController extends Controller
             'conteudo_post' => 'required',
             'imagem_post' => 'image|mimes:jpeg,png,jpg,gif|max:2048'
         ]);
-    
+
         // Recuperar a postagem que você deseja atualizar
         $post = Post::findOrFail($id);
-    
+
         // Aplicar as alterações nos campos
         $post->conteudo_post = $request->input('conteudo_post');
-    
+
         // Verificar se uma nova imagem foi enviada
         if ($request->hasFile('imagem_post') && $request->file('imagem_post')->isValid()) {
             $requestImage = $request->file('imagem_post');
@@ -97,22 +90,30 @@ class PostsController extends Controller
             $requestImage->move(public_path('img/postagem'), $imageName);
             $post->imagem_post = $imageName;
         }
-    
+
         // Salvar a postagem atualizada
         $post->save();
-    
+
         // Redirecionar para a página de detalhes da postagem, por exemplo
         return redirect()->route('home', $post->id);
     }
-    
+
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(string $id)
     {
-       // dd($id);
-        Post::where('id' , $id)->delete();
-        return redirect()->route('home');
+        // Recuperar a postagem que você deseja excluir
+        $post = Post::findOrFail($id);
 
+        // Verificar se o usuário autenticado é o dono da postagem
+        if (auth()->user()->id !== $post->users_id) {
+            return redirect()->route('home')->with('error', 'Você não tem permissão para excluir esta postagem.');
+        }
+
+        // Deletar a postagem
+        $post->delete();
+
+        return redirect()->route('home')->with('success', 'Postagem deletada com sucesso.');
     }
 }
