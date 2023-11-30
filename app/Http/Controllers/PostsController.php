@@ -55,15 +55,16 @@ class PostsController extends Controller
      */
     public function edit(string $id)
     {
-        //
-        //dd($id);
         $post = Post::where('id', $id)->first();
-        if (!empty($post)) {
-            return view('postagens.edit', ['post' => $post]);
-        } else {
-            return redirect()->route('home');
+    
+        // Verificar se o usuário autenticado é o dono do post
+        if (empty($post) || (auth()->user()->id !== $post->users_id)) {
+            return redirect()->route('home')->with('error', 'Você não tem permissão para editar esta postagem.');
         }
+    
+        return view('postagens.edit', ['post' => $post]);
     }
+    
 
     /**
      * Update the specified resource in storage.

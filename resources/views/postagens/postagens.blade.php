@@ -45,11 +45,13 @@
                 <button type="button" class="filePost comment" onclick="mostrar_modal({{$post->id}})">
                     <img src="{{ asset('img/heart.svg') }}" alt="Curtir"> Comentar ({{ $post->commentCount() }})
                 </button>
-                <form action="{{ route('postagem.edit', ['id' => $post->id]) }}" action="">
-                    <button type="submit" class="filePost navbar-brand" style="background-color: #00ff7f; color: white;">
-                        <i>Editar</i>
-                    </button>
-                </form>
+                @if (auth()->check() && auth()->user()->id === $post->users_id)
+                    <form action="{{ route('postagem.edit', ['id' => $post->id]) }}" method="GET">
+                        <button type="submit" class="filePost navbar-brand" style="background-color: #00ff7f; color: white;">
+                            <i>Editar</i>
+                        </button>
+                    </form>
+                @endif
                 @if (auth()->check() && auth()->user()->id === $post->users_id)
                     <form action="{{ route('postagem.destroy', ['id' => $post->id]) }}" method="POST">
                         @csrf
