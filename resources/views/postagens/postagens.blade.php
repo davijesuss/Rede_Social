@@ -86,12 +86,13 @@
                             </form>
 
                             @foreach($post->comments as $comment)
+     
                             <ul class="posts" id="idUlPost">
                                 <li class="post">
                                     <div class="infoUserPost">
                                         <div class="imgUserpost"></div>
                                         <div class="nameAndHour">
-                                            <strong>{{ $comment->user ? $comment->user->name : 'Usuário não encontrado' }}</strong>
+                                        <strong>{{ $comment->user->name}}</strong>
                                             <p>21h</p>
                                         </div>
                                     </div>

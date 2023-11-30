@@ -48,11 +48,11 @@ class CommentController extends Controller
     {
         //
 
-        $post = Post::findOrFail($id);
-        $comments = $post->comments; 
+        $post = Post::with('comments.user')->findOrFail($id);
+    $comments = $post->comments; 
 
-        return View::make('postagens.postagens', compact('post', 'comments'));
-    }
+    return View::make('postagens.postagens', compact('post', 'comments'));
+}
 
     /**
      * Show the form for editing the specified resource.
